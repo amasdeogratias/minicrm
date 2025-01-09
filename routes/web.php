@@ -16,6 +16,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource("users", UserController::class)->middleware('can:'.PermissionEnum::MANAGE_USERS->value);
+    Route::resource("clients", ClientController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

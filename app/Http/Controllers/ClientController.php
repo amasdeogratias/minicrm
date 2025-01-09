@@ -22,7 +22,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view("clients.create");
     }
 
     /**
@@ -30,7 +30,14 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        //
+        try {
+
+            Client::create($request->validated());
+            return redirect()->route("clients.index")->with("message", "Client created successfully");
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
