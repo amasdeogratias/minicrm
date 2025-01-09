@@ -53,7 +53,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view("clients.edit", compact("client"));
     }
 
     /**
@@ -61,7 +61,14 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        try {
+            $client->update($request->validated());
+
+            return redirect()->route("clients.index")->with("message", "Client updated successfully...");
+
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
