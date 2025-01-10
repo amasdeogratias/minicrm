@@ -82,7 +82,7 @@
                                         </td>
                                         <td class="px-6 py-3 bg-gray-50 text-left">
                                             <a href="{{route('clients.edit', $client)}}" class="underline">Edit</a>
-                                            @can(\App\PermissionEnum::DELETE_CLIENTS->value) 
+                                            @can(\App\Enums\PermissionEnum::DELETE_CLIENTS->value) 
                                                 |
                                                 <form method="POST"
                                                     class="inline-block" 
