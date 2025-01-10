@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Enums\PermissionEnum;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ClientController extends Controller
 {
