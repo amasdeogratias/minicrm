@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\User;
+use App\Models\Client;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 
@@ -22,7 +24,10 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::select(["id", "first_name", "last_name"])->get();
+        $clients = Client::select(["id", "company_name"])->get();
+
+        return view("projects.create", compact("users", "clients"));
     }
 
     /**
@@ -30,7 +35,14 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        try {
+            
+            Project::create($request->validated());
+            return redirect()->route("projects.index")->with("message", "Project Created successfully...");
+            
+        } catch (\Exception $e) {
+            throw new Exception("Error in creating project".$e->getMessage());
+        }
     }
 
     /**
