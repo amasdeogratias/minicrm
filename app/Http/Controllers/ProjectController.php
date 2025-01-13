@@ -76,6 +76,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        try {
+            $project->delete();
+            return redirect()->route("projects.index")->with("message", "Project deleted successfully");
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 }
