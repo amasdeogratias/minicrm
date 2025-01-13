@@ -46,19 +46,14 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Project $project)
     {
-        //
+        $users = User::select(["id", "first_name", "last_name"])->get();
+        $clients = Client::select(["id", "company_name"])->get();
+
+        return view("projects.edit", compact("project", "users", "clients"));
     }
 
     /**
@@ -66,7 +61,14 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        try {
+            
+            $project->update($request->validated());
+
+            return redirect()->route("projects.index")->with("message", "Project updated successfully...");
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
