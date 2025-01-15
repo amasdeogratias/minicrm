@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
+use App\Models\Client;
+use App\Models\Project;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 
@@ -22,7 +25,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::select(["id", "first_name", "last_name"])->get();
+        $clients = Client::select(["id", "company_name"])->get();
+        $projects = Project::select(["id", "title"])->get();
+
+        return view("tasks.create", compact("users", "clients", "projects"));
     }
 
     /**
