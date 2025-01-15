@@ -45,20 +45,17 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Task $task)
     {
-        //
+        $users = User::select(["id", "first_name", "last_name"])->get();
+        $clients = Client::select(["id", "company_name"])->get();
+        $projects = Project::select(["id", "title"])->get();
+
+        return view("tasks.edit", compact("task", "users", "clients", "projects"));
     }
 
     /**
@@ -66,7 +63,12 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        try {
+            $task->update($request->validated());
+            return redirect()->route("tasks.index")->with("message", "Task updated successfully...");
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage);
+        }
     }
 
     /**
