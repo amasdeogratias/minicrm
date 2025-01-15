@@ -8,6 +8,8 @@ use App\Models\Client;
 use App\Models\Project;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Support\Facades\Gate;
+use App\Enums\PermissionEnum;
 
 class TaskController extends Controller
 {
@@ -76,6 +78,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        Gate::authorize(PermissionEnum::DELETE_TASKS->value);
         try {
             $task->delete();
             return redirect()->route("tasks.index")->with("message", "Task deleted successfully");
