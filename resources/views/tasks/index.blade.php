@@ -80,6 +80,15 @@
                                         </td>
                                         <td class="px-6 py-3 bg-gray-50 text-left">
                                             <a href="{{route('tasks.edit', $task)}}" class="underline">Edit</a>
+                                            |
+                                            <form method="POST"
+                                                class="inline-block" 
+                                                action="{{ route('tasks.destroy', $task) }}" 
+                                                onsubmit="return confirm('Are you sure you want to delete this task?')">
+                                                @method("DELETE")
+                                                @csrf
+                                                <button type="submit" class=" text-sm text-red-500 underline">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
