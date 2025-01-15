@@ -28,7 +28,7 @@ class StoreProjectRequest extends FormRequest
             'description'   => ['required'],
             'user_id'       => ['required', Rule::exists('users', 'id')],
             'client_id'     => ['required', Rule::exists('clients', 'id')],
-            'deadline_at'   => ['required', 'date'],
+            'deadline_at'   => ['required', 'date', 'after_or_equal:today'],
             'status'        => ['required', Rule::enum(ProjectStatus::class)],
         ];
     }
